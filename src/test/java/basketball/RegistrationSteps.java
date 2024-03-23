@@ -18,7 +18,7 @@ public class RegistrationSteps {
 
     @Given("^I am on the registration page$")
     public void iAmOnTheRegistrationPage() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\chromedriver-win64\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "chromedriver/chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://membership.basketballengland.co.uk/NewSupporterAccount");
     }
