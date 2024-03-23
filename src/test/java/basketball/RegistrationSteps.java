@@ -1,5 +1,7 @@
 package basketball;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -16,11 +18,21 @@ import java.time.Duration;
 public class RegistrationSteps {
     WebDriver driver;
 
-    @Given("^I am on the registration page$")
-    public void iAmOnTheRegistrationPage() {
+    @Before
+    public void setUp(){
         System.setProperty("webdriver.chrome.driver", "chromedriver/chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://membership.basketballengland.co.uk/NewSupporterAccount");
+    }
+
+    @After
+    public void tearDown(){
+        driver.quit();
+    }
+
+    @Given("^I am on the registration page$")
+    public void iAmOnTheRegistrationPage() {
+
     }
 
     @When("^I fill in all required fields correctly$")
@@ -56,7 +68,6 @@ public class RegistrationSteps {
 
         WebElement codeOfConduct = driver.findElement(By.xpath("//form[@id='signup_form']/div[11]/div/div[7]/label/span[3]"));
         codeOfConduct.click();
-
     }
 
     @When("^I fill in all required fields except the last name$")
@@ -97,27 +108,23 @@ public class RegistrationSteps {
 
         String currentUrl = driver.getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("/Account/SignUpConfirmation"));
-        driver.quit();
     }
 
     @Then("^I should see an error message indicating missing last name$")
     public void iShouldSeeAnErrorMessageIndicatingMissingLastName() {
         WebElement errorMessage = driver.findElement(By.xpath("//span[contains(text(),'Last Name is required')]"));
         Assert.assertTrue(errorMessage.isDisplayed());
-        driver.quit();
     }
 
     @Then("^I should see an error message indicating password mismatch$")
     public void iShouldSeeAnErrorMessageIndicatingPasswordMismatch() {
         WebElement errorMessage = driver.findElement(By.xpath("//span[contains(text(),'Password did not match')]"));
         Assert.assertTrue(errorMessage.isDisplayed());
-        driver.quit();
     }
 
     @Then("^I should see an error message indicating terms and conditions not accepted$")
     public void iShouldSeeAnErrorMessageIndicatingTermsAndConditionsNotAccepted() {
         WebElement errorMessage = driver.findElement(By.xpath("//span[contains(text(),'You must confirm that you have read and accepted our Terms and Conditions')]"));
         Assert.assertTrue(errorMessage.isDisplayed());
-        driver.quit();
     }
 }
